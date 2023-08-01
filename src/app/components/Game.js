@@ -19,7 +19,7 @@ export class Game extends Component {
         this.state = {
             didCollide: false,
             count: 0,
-            chances: 3
+            chances: 0,
         }
         this.player = null
         this.gameEngine = null
@@ -39,7 +39,8 @@ export class Game extends Component {
     }
 
     componentDidMount() {
-        let chanceToPlay = localStorage.getItem("chances")
+        let chanceToPlay = localStorage.getItem("chances");
+        this.setState({chances: localStorage.getItem("chances")});
         let date = localStorage.getItem("dates")
         if (chanceToPlay === "undefined" || chanceToPlay === "NaN" || Number(chanceToPlay) < 0) {
             localStorage.setItem("chances", "3")
@@ -272,7 +273,7 @@ export class Game extends Component {
                 <Fragment>
                     <div className='fixed inset-0 pl-4 space-x-10 h-16 w-96 flex flex-1 align-middle  bg-blue-300 border rounded-md text-black'>
                         <span className='text-white '>Score: {this.state.count} </span>
-                        <span className='text-white '>Tries : {Number(localStorage?.getItem("chances")) >= 0 ? localStorage?.getItem("chances") : 0}</span>
+                        <span className='text-white '>Tries : {!!!this.state.chances ? "" : this.state.chances}</span>
 
                         <button className='w-36 h-10 rounded-xl bg-amber-300 align-middle justify-center'>
                             <span class="absolute -top-0 h-3 w-3">
