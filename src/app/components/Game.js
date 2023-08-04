@@ -201,7 +201,7 @@ export class Game extends Component {
             this.player.force.y = -0.2
         })
         this.windowRef.addEventListener("touchstart", () => {
-            this.player.force.y = -0.2
+            this.player.force.y = -0.02
         })
 
 
@@ -271,24 +271,31 @@ export class Game extends Component {
         return (
             <>
                 <Fragment>
-                    <div className='fixed inset-0 pl-4 space-x-10 h-16 w-96 flex flex-1 align-middle  bg-blue-300 border rounded-md text-black'>
-                        <span className='text-white '>Score: {this.state.count} </span>
-                        <span className='text-white '>Tries : {!!!this.state.chances ? "" : this.state.chances}</span>
-
-                        <button className='w-36 h-10 rounded-xl bg-amber-300 align-middle justify-center'>
-                            <span class="absolute -top-0 h-3 w-3">
-                                <span class="animate-ping absolute left-[5.7rem] -top-0 inline-flex h-5 w-5 rounded-full bg-purple-400 opacity-75"></span>
-                                <span class="relative inline-flex left-24 rounded-full h-3 w-3 bg-purple-500"></span>
-                            </span>
-                            Play Again
-                            </button>
-                        
+                    <div className='flex flex-1 justify-end items-end w-screen h-16'>
+                        <div className='fixed right-0 top-0 bg-gray-100 shadow-lg space-x-8 h-16 w-72 flex flex-1 justify-center items-center border rounded-md text-black'>
+                            <span className='text-black '>Score: {this.state.count} </span>
+                            <span className='text-black '>Tries : {this.state.chances < 0? "0" : this.state.chances}</span>
+                            
+                        </div>
                     </div>
                     <div className='-z-50 w-screen h-screen' ref={this.divRef}></div>
                     {
                         this.state.didCollide && (this.state.chances === 0) ? (
                             <Win count={this.state.count} windowRef={this.windowRef} />
                         ) : (null)}
+
+                    {
+                        this.state.didCollide && (this.state.chances != 0) ?(
+                        <div className={`fixed bg-blue-300 h-[15rem] w-[15rem] rounded-lg bg-opacity-25 backdrop-blur-sm flex flex-col justify-center items-center m-auto`}>
+                            <p className='text-black'>Uh! Ohh</p>
+                            <button onClick={()=>{
+                            this.windowRef.location.reload()
+                        }} className='w-36 h-10 rounded-xl bg-red-300 align-middle justify-center shadow-[30px_15px_60px_0_rgba(125,0,0,0.5)]'>
+                            Play Again
+                            </button>
+                            </div>
+                        ):(null)
+                    }
                 </Fragment>
             </>
         )
